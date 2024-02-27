@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 === Задача на распаковку ===
 
@@ -19,5 +21,5 @@ package main
 */
 
 func main() {
-
+	fmt.Println("dev02")
 }
