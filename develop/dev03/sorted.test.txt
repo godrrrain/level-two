@@ -1,0 +1,4 @@
+abs 25 hu
+befk 8 ka
+one 53 bd
+ya 45 ab

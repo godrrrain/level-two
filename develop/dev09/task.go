@@ -1,5 +1,13 @@
 package main
 
+import (
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"path/filepath"
+)
+
 /*
 === Утилита wget ===
 
@@ -9,5 +17,40 @@ package main
 */
 
 func main() {
+	if len(os.Args) < 2 {
+		fmt.Println("Некорректное использование, укажите URL в качестве аргумента")
+		return
+	}
 
+	url := os.Args[1]
+	filename := filepath.Base(url)
+
+	err := download(url, filename)
+	if err != nil {
+		fmt.Printf("Ошибка при скачивании сайта: %s\n", err.Error())
+		return
+	}
+
+	fmt.Println("Сайт успешно скачан")
+}
+
+func download(url, filename string) error {
+	response, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+
+	file, err := os.Create(filename + `.html`)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = io.Copy(file, response.Body)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
